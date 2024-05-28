@@ -1,6 +1,15 @@
 import datetime
 from django.db import models
 
+class ModeOfTransportModel(models.Model):
+    mode_of_transport = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.mode_of_transport)
+
+    
+
+
 class ShipmentDetailsModel(models.Model):
 
     
@@ -17,11 +26,8 @@ class ShipmentDetailsModel(models.Model):
     origin = models.CharField(max_length=250)
     destination = models.CharField(max_length=250)
     expected_delivery_date = models.DateField(default= datetime.date.today)
-    mode_of_transport = models.CharField(
-        max_length= 20,
-        choices=MOT_OPTIONS,
-        default='Bike',
-    )
+    mode_of_transport = models.ForeignKey(ModeOfTransportModel, on_delete=models.SET_NULL, null=True)
+    
     
     def __str__(self):
         return str(self.tracking_number)
